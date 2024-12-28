@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Numeric
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from ..database import Base
 import uuid
@@ -8,8 +7,8 @@ from datetime import datetime
 class MaintenanceRecord(Base):
     __tablename__ = "maintenance_records"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    vehicle_id = Column(UUID(as_uuid=True), ForeignKey("vehicles.id"))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    vehicle_id = Column(String, ForeignKey("vehicles.id"))
     service_type = Column(String)
     mileage = Column(Integer)
     date = Column(DateTime)
@@ -22,8 +21,8 @@ class MaintenanceRecord(Base):
 class MaintenanceSchedule(Base):
     __tablename__ = "maintenance_schedules"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    vehicle_id = Column(UUID(as_uuid=True), ForeignKey("vehicles.id"))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    vehicle_id = Column(String, ForeignKey("vehicles.id"))
     service_type = Column(String)
     interval_months = Column(Integer, nullable=True)
     interval_miles = Column(Integer, nullable=True)
